@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "378599481983",
+    "project_id": "hamakionline-c6a99",
+    "storage_bucket": "hamakionline-c6a99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378599481983:android:88a6f4aab71d84ed0c554a",
+        "android_client_info": {
+          "package_name": "com.arabapps.hamaki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378599481983-psbj0hl21fb2chtak9rr21ugqqpngto6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCysV1OAxVdxFbFNmdcR5JclTfangfXwwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378599481983-psbj0hl21fb2chtak9rr21ugqqpngto6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
+
+
+    <attr name="siArrowPosition">
+
+        <enum name="left" value="0" />
+
+        <enum name="right" value="1" />
+
+    </attr>
+
+
+    <attr name="siBorderType">
+
+        <enum name="stroke" value="0" />
+
+        <enum name="fill" value="1" />
+
+    </attr>
+
+
+    <attr name="siStrokeCap">
+
+        <enum name="butt" value="0" />
+
+        <enum name="round" value="1" />
+
+        <enum name="square" value="2" />
+
+    </attr>
+
+
+    <attr name="siStrokeJoin">
+
+        <enum name="bevel" value="0" />
+
+        <enum name="miter" value="1" />
+
+        <enum name="round" value="2" />
+
+    </attr>
+
+
+
+    <declare-styleable name="ShaderImageView">
+
+    <attr name="siSquare" format="boolean"/>
+
+    <attr name="siBorderColor" format="color"/>
+
+    <attr name="siBorderWidth" format="dimension"/>
+
+    <attr name="siBorderAlpha" format="float"/>
+
+    <attr name="siForeground" format="integer|reference"/>
+
+    <!-- Rounded Image View -->
+
+
+    <attr name="siRadius" format="dimension"/>
+
+    <!--BubbleImageView-->
+
+
+    <attr name="siArrowPosition"/>
+
+    <attr name="siTriangleHeight" format="dimension"/>
+
+    <!--PorterImageView-->
+
+
+    <attr name="siShape" format="integer|reference"/>
+
+    <!--ShaderImageView-->
+
+
+    <attr name="siBorderType"/>
+
+    <attr name="siStrokeCap"/>
+
+    <attr name="siStrokeJoin"/>
+
+    <attr name="siStrokeMiter" format="dimension"/>
+
+</declare-styleable>
+    <declare-styleable name="CircleSeekBar">
+
+        <attr name="wheel_max_process" format="integer" />
+
+        <attr name="wheel_cur_process" format="integer" />
+
+        <attr name="wheel_reached_color" format="color" />
+
+        <attr name="wheel_reached_width" format="dimension" />
+
+        <attr name="wheel_reached_has_corner_round" format="boolean" />
+
+        <attr name="wheel_unreached_color" format="color" />
+
+        <attr name="wheel_unreached_width" format="dimension" />
+
+        <attr name="wheel_pointer_color" format="color" />
+
+        <attr name="wheel_pointer_radius" format="dimension" />
+
+        <attr name="wheel_has_pointer_shadow" format="boolean" />
+
+        <attr name="wheel_has_wheel_shadow" format="boolean" />
+
+        <attr name="wheel_pointer_shadow_radius" format="dimension" />
+
+        <attr name="wheel_shadow_radius" format="dimension" />
+
+        <attr name="wheel_has_cache" format="boolean" />
+
+        <attr name="wheel_can_touch" format="boolean" />
+
+        <attr name="wheel_scroll_only_one_circle" format="boolean" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="TemplateView">
+
+        <attr name="gnt_template_type" format="reference" />
+
+    </declare-styleable>
+</resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.arabapps.hamaki">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name=".permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Hamaky"
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="n">
+        <activity android:name=".ui.activity.FullScreenVideoActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.activity.RedirectInfoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".WebViewActivity"
+            android:configChanges="orientation|locale|density|keyboard|screenSize|smallestScreenSize|touchscreen|navigation|screenLayout|mcc|fontScale|colorMode|keyboardHidden|layoutDirection|mnc"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity.main.MainActivity"
+            android:configChanges="orientation|locale|density|keyboard|screenSize|smallestScreenSize|touchscreen|navigation|screenLayout|mcc|fontScale|colorMode|keyboardHidden|layoutDirection|mnc"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity.login.LoginActivity"
+            android:configChanges="orientation|locale|density|keyboard|screenSize|smallestScreenSize|touchscreen|navigation|screenLayout|mcc|fontScale|colorMode|keyboardHidden|layoutDirection|mnc"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:configChanges="orientation|locale|density|keyboard|screenSize|smallestScreenSize|touchscreen|navigation|screenLayout|mcc|fontScale|colorMode|keyboardHidden|layoutDirection|mnc"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/purple_500" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <receiver
+            android:name=".BroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".ui.activity.zoom_image.ImageFullscreenActivity"
+            android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>
