@@ -32,12 +32,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.profile(this)
-
         FirebaseMessaging.getInstance().subscribeToTopic("hamaki-app")
         binding.imageView2.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(1000)
             .setStartDelay(1000)
@@ -65,7 +63,6 @@ class SplashActivity : AppCompatActivity() {
                     val version: String = pInfo.versionName
                     if (it.version_status.equals("0") && !isProbablyRunningOnEmulator()) {
                         Handler(Looper.myLooper()!!).postDelayed({
-
                             var intent: Intent? = null
                             if (SharedHelper.getString(this@SplashActivity, SharedHelper.TOKEN)
                                     .isNullOrEmpty()

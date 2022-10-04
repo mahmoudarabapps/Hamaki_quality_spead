@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment)
         binding.navView.setSelectedWithId(R.id.navigation_account, false)
         binding.navView.setSelectedWithId(R.id.navigation_home, false)
-
         binding.navView.addBubbleListener(object : OnBubbleClickListener {
             override fun onBubbleClick(id: Int) {
                 navController.navigate(id)

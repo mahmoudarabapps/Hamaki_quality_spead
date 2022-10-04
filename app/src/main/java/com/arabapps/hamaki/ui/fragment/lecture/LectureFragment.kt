@@ -12,6 +12,8 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
+import android.hardware.display.DisplayManager
+import android.media.MediaRecorder
 import android.media.PlaybackParams
 import android.net.Uri
 import android.os.Build
@@ -204,18 +206,36 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
 
     }
 
-
     val reciver = updateBroadcast
     val adapter = AttachesAdapter()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val receiverFilter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
         binding.root.context.registerReceiver(br, receiverFilter)
-
         binding.root.context.registerReceiver(
             broadcastReceiver2,
             IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
         );
+        //disable audio record
+        val listener = object : DisplayManager.DisplayListener {
+            override fun onDisplayChanged(displayId: Int) {
+
+            }
+
+            override fun onDisplayAdded(displayId: Int) {
+               // binding.videoView?.player?.playWhenReady = false
+                binding.videoView.player?.stop()
+
+            }
+
+            override fun onDisplayRemoved(displayId: Int) {
+             //   binding.videoView?.player?.playWhenReady = true
+              //  binding.videoView.player?.release()
+            }
+        }
+
+        val displayManager = context?.getSystemService(Context.DISPLAY_SERVICE) as? DisplayManager
+        displayManager?.registerDisplayListener(listener, null)
         binding.attachsReycler.adapter = adapter
         viewModel = ViewModelProvider(this).get(LectureViewModel::class.java)
         binding.root.context.registerReceiver(reciver, IntentFilter("ACTION_UPDATE_FILES"))
