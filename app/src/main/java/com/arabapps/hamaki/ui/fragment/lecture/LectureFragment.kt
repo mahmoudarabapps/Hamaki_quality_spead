@@ -191,9 +191,6 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = LectureFragmentBinding.inflate(inflater, container, false)
-
-
-
         return binding.root
     }
 
@@ -216,6 +213,13 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
             broadcastReceiver2,
             IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
         );
+        if (context?.let { SharedHelper.getString(it, "ScreenRecord") } == "true") {
+            binding.viewBlock2.visibility = View.VISIBLE
+            binding.textScreenRecord.visibility = View.VISIBLE
+        } else {
+            binding.viewBlock2.visibility = View.GONE
+            binding.textScreenRecord.visibility = View.GONE
+        }
         //disable audio record
         val listener = object : DisplayManager.DisplayListener {
             override fun onDisplayChanged(displayId: Int) {
@@ -223,14 +227,14 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
             }
 
             override fun onDisplayAdded(displayId: Int) {
-               // binding.videoView?.player?.playWhenReady = false
-                binding.videoView.player?.stop()
-
+                 binding.videoView?.player?.playWhenReady = false
+                binding.viewBlock2.visibility = View.VISIBLE
+                binding.textScreenRecord.visibility = View.VISIBLE
             }
 
             override fun onDisplayRemoved(displayId: Int) {
-             //   binding.videoView?.player?.playWhenReady = true
-              //  binding.videoView.player?.release()
+                binding.viewBlock2.visibility = View.GONE
+                binding.textScreenRecord.visibility = View.GONE
             }
         }
 

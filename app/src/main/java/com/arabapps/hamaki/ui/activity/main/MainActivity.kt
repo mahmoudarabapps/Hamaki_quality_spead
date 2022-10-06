@@ -1,11 +1,16 @@
 package com.arabapps.hamaki.ui.activity.main
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.hardware.display.DisplayManager
+import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -15,7 +20,10 @@ import androidx.navigation.findNavController
 import com.arabapps.hamaki.R
 import com.arabapps.hamaki.databinding.ActivityMainBinding
 import com.fxn.OnBubbleClickListener
+import com.sasco.user.helper.SharedHelper
 
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
@@ -42,7 +50,40 @@ class MainActivity : AppCompatActivity() {
             } catch (ex: Exception) {
             }
         }
+        //disable audio record
+        val listener = object : DisplayManager.DisplayListener {
+            override fun onDisplayChanged(displayId: Int) {
+
+            }
+
+            override fun onDisplayAdded(displayId: Int) {
+                // binding.videoView?.player?.playWhenReady = false
+                // binding.videoView.player?.stop()
+                Log.d(TAG, "onDisplayAdded: ")
+                SharedHelper.saveString(this@MainActivity, "ScreenRecord", "true")
+
+            }
+
+            override fun onDisplayRemoved(displayId: Int) {
+                Log.d(TAG, "onDisplayRemoved: ")
+                SharedHelper.saveString(this@MainActivity, "ScreenRecord", "false")
+            }
+        }
+
+        val displayManager = getSystemService(Context.DISPLAY_SERVICE) as? DisplayManager
+        displayManager?.registerDisplayListener(listener, null)
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            audioManager.activeRecordingConfigurations
+            var mode = audioManager.mode
+            Log.d(TAG, "onCreate: Smode ${audioManager.activeRecordingConfigurations.size}")
+            if (audioManager.activeRecordingConfigurations.size > 0) {
+                SharedHelper.saveString(this@MainActivity, "ScreenRecord", "true")
+            }
+        }
+
     }
+
 
     var doubleBackToExitPressedOnce = false
 
