@@ -206,7 +206,7 @@
             android:drawablePadding="8dp"
             android:visibility="gone"
             android:padding="12dp"
-            android:text="فى حالة محاولة التسجيل سيتم حذفك من البرنامج"
+            android:text="@string/if_you_try_to_record_you_will_be_removed_from_the_program"
             android:textColor="#F44336"
             android:textSize="14sp"
             android:drawableTint="#F44336"
