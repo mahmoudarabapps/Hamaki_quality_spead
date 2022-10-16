@@ -67,38 +67,42 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
 
 
     lateinit var binding: LectureFragmentBinding
-    private val broadcastReceiver2: BroadcastReceiver = object : BroadcastReceiver() {
-        var device: BluetoothDevice? = null
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
-                if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
-                    == BluetoothAdapter.STATE_OFF
-                ) {
-                    // Bluetooth is disconnected, do handling here
-                    Log.d(TAG, "onReceive: Bluetooth is disconnected")
-                    isHeadset = 0
-                    binding.root.context.let {
-                        binding.viewBlock.visibility = View.VISIBLE
-                        binding.toastLayout.visibility = View.VISIBLE
-                        binding.videoView?.player?.playWhenReady = false
-
-                    }
-                } else {
-                    isHeadset = 1
-                    binding.viewBlock.visibility = View.GONE
-                    binding.toastLayout.visibility = View.GONE
-                }
-            }
-        }
-    }
+//    private val broadcastReceiver2: BroadcastReceiver = object : BroadcastReceiver() {
+//        var device: BluetoothDevice? = null
+//        override fun onReceive(context: Context, intent: Intent) {
+//            val action = intent.action
+//            device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+//            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+//                if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
+//                    == BluetoothAdapter.STATE_OFF
+//                ) {
+//                    // Bluetooth is disconnected, do handling here
+//                    Log.d(TAG, "onReceive: Bluetooth is disconnected")
+//                    isHeadset = 0
+//                    binding?.root?.context.let {
+//                        binding?.viewBlock?.visibility = View.VISIBLE
+//                        binding?.toastLayout?.visibility = View.VISIBLE
+//                        binding?.videoView?.player?.playWhenReady = false
+//
+//                    }
+//                } else {
+//                    isHeadset = 1
+//                    binding?.viewBlock?.visibility = View.GONE
+//                    binding?.toastLayout?.visibility = View.GONE
+//                }
+//            }
+//        }
+//    }
 
     @SuppressLint("MissingPermission")
     fun isBluetoothHeadsetConnected(): Boolean {
-        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        return (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled
-                && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED)
+        return try {
+            val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+            (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled
+                    && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED)
+        } catch (ex: Exception) {
+            false
+        }
     }
 
     var isHeadset = -1
@@ -112,30 +116,30 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
                 iii = intent.getIntExtra("state", -1)
                 if (Integer.valueOf(iii) == 0) {
                     isHeadset = 0
-                    binding.root.context.let {
-                        binding.toastLayout.visibility = View.VISIBLE
-                        binding.viewBlock.isVisible = true
-                        binding.videoView?.player?.playWhenReady = false
+                    binding?.root?.context.let {
+                        binding?.toastLayout?.visibility = View.VISIBLE
+                        binding?.viewBlock?.isVisible = true
+                        binding?.videoView?.player?.playWhenReady = false
                     }
-                    if (isBluetoothHeadsetConnected()) {
-                        isHeadset = 1
-                        binding.viewBlock.visibility = View.GONE
-                        binding.toastLayout.visibility = View.GONE
-                    } else {
-                        isHeadset = 0
-                        binding.root.context.let {
-                            binding.viewBlock.visibility = View.VISIBLE
-                            binding.toastLayout.visibility = View.VISIBLE
-                            binding.videoView?.player?.playWhenReady = false
+//                    if (isBluetoothHeadsetConnected()) {
+//                        isHeadset = 1
+//                        binding?.viewBlock?.visibility = View.GONE
+//                        binding?.toastLayout?.visibility = View.GONE
+//                    } else {
+                    isHeadset = 0
+                    binding?.root?.context.let {
+                        binding?.viewBlock?.visibility = View.VISIBLE
+                        binding?.toastLayout?.visibility = View.VISIBLE
+                        binding?.videoView?.player?.playWhenReady = false
 
-                        }
+                        //    }
                     }
 
                 }
                 if (Integer.valueOf(iii) == 1) {
                     isHeadset = 1
-                    binding.viewBlock.isVisible = false
-                    binding.toastLayout.visibility = View.GONE
+                    binding?.viewBlock?.isVisible = false
+                    binding?.toastLayout?.visibility = View.GONE
                 }
             }
         }
@@ -147,31 +151,31 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE) {
 
-                binding.textMainTitle.visibility = View.VISIBLE
-                binding.textDesc.visibility = View.VISIBLE
-                binding.attachsReycler.visibility = View.VISIBLE
-                binding.textView14.visibility = View.VISIBLE
-                binding.view.visibility = View.VISIBLE
-                binding.textTitle.visibility = View.VISIBLE
-                binding.instructions.visibility = View.VISIBLE
-                val layoutParams: ViewGroup.LayoutParams =
-                    binding.player.layoutParams
-                layoutParams.height = dpToPx(240)
-                binding.player.layoutParams = layoutParams
+                binding?.textMainTitle?.visibility = View.VISIBLE
+                binding?.textDesc?.visibility = View.VISIBLE
+                binding?.attachsReycler?.visibility = View.VISIBLE
+                binding?.textView14?.visibility = View.VISIBLE
+                binding?.view?.visibility = View.VISIBLE
+                binding?.textTitle?.visibility = View.VISIBLE
+                binding?.instructions?.visibility = View.VISIBLE
+                val layoutParams: ViewGroup.LayoutParams? =
+                    binding?.player?.layoutParams
+                layoutParams?.height = dpToPx(240)
+                binding?.player?.layoutParams = layoutParams
             } else {
-                binding.textMainTitle.visibility = View.INVISIBLE
-                binding.textDesc.visibility = View.INVISIBLE
-                binding.attachsReycler.visibility = View.INVISIBLE
-                binding.textView14.visibility = View.INVISIBLE
-                binding.view.visibility = View.INVISIBLE
-                binding.textTitle.visibility = View.INVISIBLE
-                binding.instructions.visibility = View.INVISIBLE
+                binding?.textMainTitle?.visibility = View.INVISIBLE
+                binding?.textDesc?.visibility = View.INVISIBLE
+                binding?.attachsReycler?.visibility = View.INVISIBLE
+                binding?.textView14?.visibility = View.INVISIBLE
+                binding?.view?.visibility = View.INVISIBLE
+                binding?.textTitle?.visibility = View.INVISIBLE
+                binding?.instructions?.visibility = View.INVISIBLE
 
-                val layoutParams: ViewGroup.LayoutParams =
-                    binding.player.layoutParams
-                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-                layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                binding.player.layoutParams = layoutParams
+                val layoutParams: ViewGroup.LayoutParams? =
+                    binding?.player?.layoutParams
+                layoutParams?.width = ViewGroup.LayoutParams.MATCH_PARENT
+                layoutParams?.height = ViewGroup.LayoutParams.MATCH_PARENT
+                binding?.player?.layoutParams = layoutParams
             }
         }
     }
@@ -208,17 +212,17 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val receiverFilter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
-        binding.root.context.registerReceiver(br, receiverFilter)
-        binding.root.context.registerReceiver(
-            broadcastReceiver2,
-            IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
-        );
+        binding?.root?.context?.registerReceiver(br, receiverFilter)
+//        binding?.root?.context?.registerReceiver(
+//            broadcastReceiver2,
+//            IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+//        );
         if (context?.let { SharedHelper.getString(it, "ScreenRecord") } == "true") {
-            binding.viewBlock2.visibility = View.VISIBLE
-            binding.textScreenRecord.visibility = View.VISIBLE
+            binding?.viewBlock2?.visibility = View.VISIBLE
+            binding?.textScreenRecord?.visibility = View.VISIBLE
         } else {
-            binding.viewBlock2.visibility = View.GONE
-            binding.textScreenRecord.visibility = View.GONE
+            binding?.viewBlock2?.visibility = View.GONE
+            binding?.textScreenRecord?.visibility = View.GONE
         }
         //disable audio record
         val listener = object : DisplayManager.DisplayListener {
@@ -227,7 +231,7 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
             }
 
             override fun onDisplayAdded(displayId: Int) {
-                 binding.videoView?.player?.playWhenReady = false
+                binding.videoView.player?.playWhenReady = false
                 binding.viewBlock2.visibility = View.VISIBLE
                 binding.textScreenRecord.visibility = View.VISIBLE
             }
@@ -242,7 +246,7 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
         displayManager?.registerDisplayListener(listener, null)
         binding.attachsReycler.adapter = adapter
         viewModel = ViewModelProvider(this).get(LectureViewModel::class.java)
-        binding.root.context.registerReceiver(reciver, IntentFilter("ACTION_UPDATE_FILES"))
+        binding.root.context?.registerReceiver(reciver, IntentFilter("ACTION_UPDATE_FILES"))
         binding.instructions.setOnClickListener {
             Navigation.createNavigateOnClickListener(R.id.action_lectureFragment_to_instructionsFragment)
                 .onClick(it)
@@ -275,8 +279,8 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
                             return@setOnClickListener
                         }
                         videoUrl = "480"
-                        binding.p720.setTextColor(if (videoUrl.contentEquals("720")) Color.WHITE else Color.GRAY)
-                        binding.p480.setTextColor(if (videoUrl.contentEquals("480")) Color.WHITE else Color.GRAY)
+                        binding?.p720?.setTextColor(if (videoUrl.contentEquals("720")) Color.WHITE else Color.GRAY)
+                        binding?.p480?.setTextColor(if (videoUrl.contentEquals("480")) Color.WHITE else Color.GRAY)
                         initializePlayer(it.video480)
                     }
                     binding.p720.setOnClickListener { view ->
@@ -313,13 +317,14 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putLong("pos", binding.videoView.player.currentPosition ?: 0)
+        if (::binding.isInitialized) {
+            if (binding.videoView.player != null)
+                outState.putLong("pos", binding.videoView.player.currentPosition ?: 0)
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun initializePlayer(videoUrl: String?) {
-
-
         binding.videoView.player?.stop()
         binding.videoView.player?.release()
         aniumateText()
@@ -483,7 +488,8 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
 
     override fun onStop() {
         super.onStop()
-        binding.videoView.player.stop()
+        if (binding.videoView.player != null)
+            binding.videoView.player.stop()
 
     }
 
@@ -492,6 +498,8 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
         try {
             context?.unregisterReceiver(reciver)
             context?.unregisterReceiver(br)
+            //  context?.unregisterReceiver(broadcastReceiver2)
+
             context?.unregisterReceiver(fullscreenBroadcast)
             binding.videoView.player.release()
         } catch (ex: Exception) {

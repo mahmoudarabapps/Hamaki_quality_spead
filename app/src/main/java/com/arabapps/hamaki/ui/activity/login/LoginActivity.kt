@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.text.InputType
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +16,7 @@ import com.sasco.user.helper.DialogHelper
 import com.sasco.user.helper.TextValidationInput
 
 class LoginActivity : AppCompatActivity() {
-
+    private val TAG = "LoginActivity"
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loading: Dialog
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         loading = DialogHelper.getLoading(this)
         loginViewModel = ViewModelProvider(this)
             .get(LoginViewModel::class.java)
+
         binding.apply {
             login.setOnClickListener {
                 if (TextValidationInput.isPhoneValid(binding.phone) && TextValidationInput.isPasswordalid(
@@ -37,8 +39,10 @@ class LoginActivity : AppCompatActivity() {
                         this@LoginActivity,
                         phone.text.toString(),
                         password.text.toString(),
-                        Settings.Secure.getString(getContentResolver(),
-                            Settings.Secure.ANDROID_ID)
+                        Settings.Secure.getString(
+                            getContentResolver(),
+                            Settings.Secure.ANDROID_ID
+                        )
                     )
                 }
             }

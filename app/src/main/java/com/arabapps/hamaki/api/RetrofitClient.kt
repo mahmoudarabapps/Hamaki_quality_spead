@@ -14,8 +14,6 @@ class RetrofitClient {
         var gson: Gson? = GsonBuilder()
             .setLenient()
             .create()
-
-
         var httpClient = OkHttpClient.Builder()
             .callTimeout(1, TimeUnit.MINUTES)
             .connectTimeout(20, TimeUnit.SECONDS)

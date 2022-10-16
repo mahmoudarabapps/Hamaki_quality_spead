@@ -18,6 +18,7 @@ import com.arabapps.hamaki.BuildConfig
 import com.arabapps.hamaki.databinding.ActivitySplashBinding
 import com.arabapps.hamaki.ui.activity.login.LoginActivity
 import com.arabapps.hamaki.ui.activity.main.MainActivity
+import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sasco.user.helper.SharedHelper
 import java.io.File
@@ -36,6 +37,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.profile(this)
+        FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("hamaki-app")
         binding.imageView2.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(1000)
             .setStartDelay(1000)

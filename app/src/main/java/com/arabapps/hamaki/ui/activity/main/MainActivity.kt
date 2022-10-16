@@ -79,6 +79,9 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "onCreate: Smode ${audioManager.activeRecordingConfigurations.size}")
             if (audioManager.activeRecordingConfigurations.size > 0) {
                 SharedHelper.saveString(this@MainActivity, "ScreenRecord", "true")
+            } else {
+                SharedHelper.saveString(this@MainActivity, "ScreenRecord", "false")
+
             }
         }
 
