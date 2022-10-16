@@ -484,6 +484,7 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
     override fun onStop() {
         super.onStop()
         binding.videoView.player.stop()
+
     }
 
     public override fun onDestroy() {
