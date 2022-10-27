@@ -1,12 +1,10 @@
 package com.arabapps.hamaki.adapter
 
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.arabapps.hamaki.BuildConfig
 import com.arabapps.hamaki.R
@@ -28,13 +26,8 @@ class FavAdapter(val itemclick: ItemClicked) : RecyclerView.Adapter<FavAdapter.V
             binding.root.setOnClickListener {
                 if (adapterPosition < 0)
                     return@setOnClickListener
-                val bundle = Bundle()
-                lectures.get(adapterPosition)?.id?.let { it1 -> bundle.putInt("id", it1) }
-                Navigation.createNavigateOnClickListener(
-                    R.id.action_subjectContentFragment_to_lectureFragment,
-                    bundle
-                )
-                    .onClick(it)
+                itemclick.favItemClicked( lectures.get(adapterPosition))
+
             }
             binding.imageView.setOnClickListener {
                 if (adapterPosition < 0)
@@ -139,6 +132,7 @@ class FavAdapter(val itemclick: ItemClicked) : RecyclerView.Adapter<FavAdapter.V
     interface ItemClicked {
         fun addToFav(id: Int, position: Int)
         fun removeFav(id: Int, position: Int)
+        fun favItemClicked(get: LecturesItem?)
 
     }
     override fun getFilter(): Filter {

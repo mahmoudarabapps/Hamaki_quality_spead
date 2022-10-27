@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.arabapps.hamaki.adapter.FavAdapter
 import com.arabapps.hamaki.R
 import com.arabapps.hamaki.data.LecturesItem
@@ -101,5 +102,10 @@ class SubjectContentFragment : Fragment(), FavAdapter.ItemClicked {
             })
         }
     }
+    override fun favItemClicked(dataa: LecturesItem?) {
+        val bundle = Bundle()
+        dataa?.id?.let { it1 -> bundle.putInt("id", it1) }
+        findNavController().navigate(  R.id.lectureFragment,bundle)
 
+    }
 }

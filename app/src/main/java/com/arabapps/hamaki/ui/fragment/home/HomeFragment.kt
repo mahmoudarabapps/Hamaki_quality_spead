@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.arabapps.hamaki.BuildConfig
 import com.arabapps.hamaki.adapters.AllSubjectsHomeAdapter
 import com.arabapps.hamaki.adapters.ArticlesAdapter
 import com.arabapps.hamaki.adapter.LastAddedLecturesAdapter
 import com.arabapps.hamaki.R
+import com.arabapps.hamaki.data.LastLectureResponse
 import com.arabapps.hamaki.data.SubjectsItem
 import com.arabapps.hamaki.databinding.FragmentHomeBinding
 import com.arabapps.hamaki.ui.activity.login.LoginActivity
@@ -24,7 +26,8 @@ import com.sasco.user.helper.SharedHelper
 
 private const val TAG = "HomeFragment"
 
-class HomeFragment : Fragment(), ArticlesAdapter.PostReaction {
+class HomeFragment : Fragment(), ArticlesAdapter.PostReaction,
+    LastAddedLecturesAdapter.OnLastAddedLecClickListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
@@ -59,7 +62,7 @@ class HomeFragment : Fragment(), ArticlesAdapter.PostReaction {
             recyclerAllSubjects.adapter = allsubjectAdapter
             articlesAdapter = ArticlesAdapter(this@HomeFragment)
             recyclerLastArticles.adapter = articlesAdapter
-            lastaddhomeAdapter = LastAddedLecturesAdapter()
+            lastaddhomeAdapter = LastAddedLecturesAdapter(this@HomeFragment)
             recyclerLastAdded.adapter = lastaddhomeAdapter
 
             textUsername.text =
@@ -215,6 +218,12 @@ class HomeFragment : Fragment(), ArticlesAdapter.PostReaction {
         bottomSheetFragment.show(childFragmentManager, "bottomSheetFragment.tag")
 
 
+    }
+
+    override fun onLecClick(data: LastLectureResponse) {
+        val bundle = Bundle()
+        data.id?.let { it1 -> bundle.putInt("id", it1) }
+        findNavController().navigate(R.id.action_navigation_home_to_lectureFragment,bundle)
     }
 
 }

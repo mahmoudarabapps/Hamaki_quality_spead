@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.arabapps.hamaki.BuildConfig
+import com.arabapps.hamaki.R
 import com.arabapps.hamaki.adapter.FavAdapter
 import com.arabapps.hamaki.data.LecturesItem
 import com.arabapps.hamaki.databinding.FragmentFavBinding
@@ -40,7 +42,7 @@ class SearchFragment : Fragment(), FavAdapter.ItemClicked {
     lateinit var adapter: FavAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (BuildConfig.DEBUG)  Log.d(TAG, "onViewCreated: ")
+        if (BuildConfig.DEBUG) Log.d(TAG, "onViewCreated: ")
         adapter = FavAdapter(this)
         binding.recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this).get(LectureViewModel::class.java)
@@ -97,6 +99,13 @@ class SearchFragment : Fragment(), FavAdapter.ItemClicked {
             if (it != null)
                 adapter.deleteItem(position)
         })
+    }
+
+    override fun favItemClicked(dataa: LecturesItem?) {
+        val bundle = Bundle()
+        dataa?.id?.let { it1 -> bundle.putInt("id", it1) }
+        findNavController().navigate(  R.id.lectureFragment,bundle)
+
     }
 
 }

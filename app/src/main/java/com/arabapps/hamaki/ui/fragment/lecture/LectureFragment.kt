@@ -2,7 +2,6 @@ package com.arabapps.hamaki.ui.fragment.lecture
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothHeadset
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,7 +12,6 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.hardware.display.DisplayManager
-import android.media.MediaRecorder
 import android.media.PlaybackParams
 import android.net.Uri
 import android.os.Build
@@ -116,10 +114,10 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
                 iii = intent.getIntExtra("state", -1)
                 if (Integer.valueOf(iii) == 0) {
                     isHeadset = 0
-                    binding?.root?.context.let {
-                        binding?.toastLayout?.visibility = View.VISIBLE
-                        binding?.viewBlock?.isVisible = true
-                        binding?.videoView?.player?.playWhenReady = false
+                    binding.root.context.let {
+                        binding.toastLayout.visibility = View.VISIBLE
+                        binding.viewBlock.isVisible = true
+                        binding.videoView.player?.playWhenReady = false
                     }
 //                    if (isBluetoothHeadsetConnected()) {
 //                        isHeadset = 1
@@ -127,10 +125,10 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
 //                        binding?.toastLayout?.visibility = View.GONE
 //                    } else {
                     isHeadset = 0
-                    binding?.root?.context.let {
-                        binding?.viewBlock?.visibility = View.VISIBLE
-                        binding?.toastLayout?.visibility = View.VISIBLE
-                        binding?.videoView?.player?.playWhenReady = false
+                    binding.root.context.let {
+                        binding.viewBlock.visibility = View.VISIBLE
+                        binding.toastLayout.visibility = View.VISIBLE
+                        binding.videoView.player?.playWhenReady = false
 
                         //    }
                     }
@@ -151,7 +149,7 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE) {
 
-                binding?.textMainTitle?.visibility = View.VISIBLE
+                binding.textMainTitle.visibility = View.VISIBLE
                 binding?.textDesc?.visibility = View.VISIBLE
                 binding?.attachsReycler?.visibility = View.VISIBLE
                 binding?.textView14?.visibility = View.VISIBLE
@@ -213,7 +211,7 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
         super.onViewCreated(view, savedInstanceState)
         val receiverFilter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
         binding?.root?.context?.registerReceiver(br, receiverFilter)
-//        binding?.root?.context?.registerReceiver(
+//       binding?.root?.context?.registerReceiver(
 //            broadcastReceiver2,
 //            IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
 //        );
@@ -403,39 +401,67 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
                     }
                 }
             }
-            binding.x1.setOnClickListener {
-                var param: PlaybackParams? = null
+            binding.x1.setOnClickListener { click ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    param = PlaybackParams()
+                    val param = PlaybackParams()
                     param.speed = 1f // 1f is 1x, 2f is 2x
                     simpleExoPlayer?.playbackParams = param
+                } else {
+                    Toast.makeText(
+                        context,
+                        "this action not available in android 5.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
                 binding.videoView.hideController()
             }
-            binding.x2.setOnClickListener {
-                var param: PlaybackParams? = null
+
+            binding.x2.setOnClickListener { click ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    param = PlaybackParams()
+                    val param = PlaybackParams()
                     param?.speed = 2f // 1f is 1x, 2f is 2x
                     simpleExoPlayer?.playbackParams = param
+                    //  simpleExoPlayer?.playbackParams = simpleExoPlayer?.setp?.setSpeed(2f);
+                } else {
+                    Toast.makeText(
+                        context,
+                        "this action not available in android 5.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
                 binding.videoView.hideController()
             }
-            binding.x15.setOnClickListener {
-                var param: PlaybackParams? = null
+
+            binding.x15.setOnClickListener { click ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    param = PlaybackParams()
-                    param?.speed = 1.5f // 1f is 1x, 2f is 2x
+                    val param = PlaybackParams()
+                    param.setSpeed(1.5f) // 1f is 1x, 2f is 2x
                     simpleExoPlayer?.playbackParams = param
+                } else {
+                    Toast.makeText(
+                        context,
+                        "this action not available in android 5.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
                 binding.videoView.hideController()
             }
-            binding.x5.setOnClickListener {
-                var param: PlaybackParams? = null
+
+            binding.x5.setOnClickListener { click ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    param = PlaybackParams()
-                    param?.speed = .5f // 1f is 1x, 2f is 2x
+                    val param = PlaybackParams()
+                    param.speed = .5f // 1f is 1x, 2f is 2x
                     simpleExoPlayer?.playbackParams = param
+
+                } else {
+                    Toast.makeText(
+                        context,
+                        "this action not available in android 5.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 binding.videoView.hideController()
             }
@@ -499,7 +525,6 @@ class LectureFragment : Fragment(), ExoPlayer.EventListener {
             context?.unregisterReceiver(reciver)
             context?.unregisterReceiver(br)
             //  context?.unregisterReceiver(broadcastReceiver2)
-
             context?.unregisterReceiver(fullscreenBroadcast)
             binding.videoView.player.release()
         } catch (ex: Exception) {

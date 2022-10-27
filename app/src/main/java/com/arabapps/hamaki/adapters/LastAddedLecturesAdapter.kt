@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.arabapps.hamaki.R
@@ -15,9 +16,11 @@ import com.bumptech.glide.Glide
 
 private const val TAG = "NewsAdapter"
 
-class LastAddedLecturesAdapter : RecyclerView.Adapter<LastAddedLecturesAdapter.ViewHolder>(),
+class LastAddedLecturesAdapter (val onLastAddedLecClickListener:OnLastAddedLecClickListener): RecyclerView.Adapter<LastAddedLecturesAdapter.ViewHolder>(),
     Filterable {
-
+interface OnLastAddedLecClickListener {
+    fun onLecClick(data: LastLectureResponse)
+}
     var data: ArrayList<LastLectureResponse> = ArrayList()
     var dataCopy: ArrayList<LastLectureResponse> = ArrayList()
 
@@ -27,14 +30,8 @@ class LastAddedLecturesAdapter : RecyclerView.Adapter<LastAddedLecturesAdapter.V
             binding.root.setOnClickListener {
                 if (adapterPosition < 0)
                     return@setOnClickListener
-                val bundle = Bundle()
-                data.get(adapterPosition)?.id?.let { it1 -> bundle.putInt("id", it1) }
+                onLastAddedLecClickListener.onLecClick(data[adapterPosition])
 
-                Navigation.createNavigateOnClickListener(
-                    R.id.action_navigation_home_to_lectureFragment,
-                    bundle
-                )
-                    .onClick(it)
             }
         }
     }
